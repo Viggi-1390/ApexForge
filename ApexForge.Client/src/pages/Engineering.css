@@ -1,0 +1,1115 @@
+/* ================================
+   ApexForge — Telemetry Analysis Page
+   Matches DESIGN.md and Stitch reference.
+   ================================ */
+
+.af-engineering-page {
+  padding-bottom: 40px;
+}
+
+/* ── System Status Banner ─────────────────────────────────────────────────── */
+
+.eng-status-banner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 40px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  font-family: ui-monospace, Consolas, "JetBrains Mono", monospace;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 1.2px;
+  color: #c3c6d0;
+  background: rgba(14, 14, 16, 0.6);
+}
+
+.eng-status-left {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.eng-chip {
+  padding: 2px 8px;
+  background: #201f21;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: #c3c6d0;
+}
+
+.eng-chip-active {
+  background: rgba(225, 29, 36, 0.1);
+  border-color: #e11d24;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.eng-pulse-dot {
+  width: 6px;
+  height: 6px;
+  background: #e11d24;
+  border-radius: 50%;
+  animation: eng-pulse 1.2s infinite ease-in-out;
+}
+
+@keyframes eng-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.85); }
+}
+
+.eng-status-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* ── Selection Pending Notice Bar ─────────────────────────────────────────── */
+
+.eng-notice-banner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 40px;
+  background: rgba(225, 29, 36, 0.12);
+  border-bottom: 1px solid rgba(225, 29, 36, 0.4);
+  gap: 12px;
+}
+
+.eng-notice-banner-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: ui-monospace, Consolas, "JetBrains Mono", monospace;
+  font-size: 11px;
+}
+
+.eng-notice-badge {
+  background: #e11d24;
+  color: #ffffff;
+  font-weight: 700;
+  padding: 2px 8px;
+  letter-spacing: 1px;
+}
+
+.eng-notice-msg {
+  color: #ffffff;
+}
+
+.eng-notice-banner-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.eng-dot-sep {
+  color: rgba(255, 255, 255, 0.2);
+}
+
+.eng-text-white {
+  color: #ffffff;
+}
+
+/* ── Page Title Section ───────────────────────────────────────────────────── */
+
+.eng-title-section {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  padding: 24px 40px 16px;
+  gap: 20px;
+}
+
+.eng-title {
+  font-family: system-ui, -apple-system, "Space Grotesk", sans-serif;
+  font-size: 44px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  line-height: 1.05;
+  margin: 0 0 8px;
+  color: #ffffff;
+  text-transform: uppercase;
+}
+
+.eng-subtitle {
+  font-size: 14px;
+  color: #c3c6d0;
+  margin: 0;
+  max-width: 680px;
+}
+
+.eng-title-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* ── Session HUD Strip ────────────────────────────────────────────────────── */
+
+.eng-hud-strip {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 1px;
+  background: rgba(255, 255, 255, 0.08);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  margin: 0 40px 24px;
+}
+
+.eng-hud-cell {
+  background: #1c1b1d;
+  padding: 12px 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.eng-hud-label {
+  font-family: ui-monospace, Consolas, "JetBrains Mono", monospace;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  color: rgba(255, 255, 255, 0.4);
+  text-transform: uppercase;
+}
+
+.eng-hud-value-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-top: 4px;
+}
+
+.eng-hud-main-val {
+  font-size: 18px;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: 0.5px;
+}
+
+.eng-hud-sub-val {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.4);
+  font-weight: 400;
+}
+
+.eng-hud-tag-red {
+  font-family: ui-monospace, Consolas, "JetBrains Mono", monospace;
+  font-size: 10px;
+  font-weight: 700;
+  color: #e11d24;
+}
+
+.eng-hud-tag-grey {
+  font-family: ui-monospace, Consolas, "JetBrains Mono", monospace;
+  font-size: 10px;
+  font-weight: 500;
+  color: #c3c6d0;
+}
+
+.eng-red-text {
+  color: #e11d24 !important;
+}
+
+/* ── Panels Base ──────────────────────────────────────────────────────────── */
+
+.eng-panel {
+  background: #1c1b1d;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  position: relative;
+  padding: 16px;
+}
+
+.eng-panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  margin-bottom: 12px;
+}
+
+.eng-panel-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: ui-monospace, Consolas, "JetBrains Mono", monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: #c3c6d0;
+  text-transform: uppercase;
+}
+
+.eng-red-sq {
+  width: 6px;
+  height: 6px;
+  background: #e11d24;
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+.eng-panel-meta {
+  font-family: ui-monospace, Consolas, "JetBrains Mono", monospace;
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.3);
+}
+
+.eng-panel-badge {
+  font-family: ui-monospace, Consolas, "JetBrains Mono", monospace;
+  font-size: 10px;
+  font-weight: 600;
+  color: #ffffff;
+  background: #201f21;
+  padding: 2px 8px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* ── Top Stage 3-Column Grid ──────────────────────────────────────────────── */
+
+.eng-stage-grid {
+  display: grid;
+  grid-template-columns: 4fr 5fr 3fr;
+  gap: 16px;
+  padding: 0 40px 24px;
+}
+
+/* Chassis Wireframe Panel */
+
+.eng-chassis-schematic {
+  position: relative;
+  height: 220px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 12px 0;
+}
+
+.eng-chassis-svg {
+  width: 190px;
+  height: 220px;
+}
+
+.eng-tyre-badge {
+  position: absolute;
+  background: #201f21;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  padding: 6px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-family: ui-monospace, Consolas, "JetBrains Mono", monospace;
+  font-size: 10px;
+  z-index: 2;
+}
+
+.eng-tyre-fl { top: 0; left: 0; }
+.eng-tyre-fr { top: 0; right: 0; text-align: right; }
+.eng-tyre-rl { bottom: 0; left: 0; }
+.eng-tyre-rr { bottom: 0; right: 0; text-align: right; }
+
+.eng-tyre-label { color: rgba(255, 255, 255, 0.4); }
+.eng-tyre-val { font-weight: 700; color: #ffffff; }
+.eng-tyre-sub { font-weight: 400; color: rgba(255, 255, 255, 0.4); }
+
+.eng-tyre-meter {
+  width: 50px;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.1);
+  margin-top: 3px;
+}
+
+.eng-tyre-fr .eng-tyre-meter,
+.eng-tyre-rr .eng-tyre-meter {
+  align-self: flex-end;
+}
+
+.eng-tyre-bar {
+  height: 100%;
+  background: #e11d24;
+}
+
+.eng-chassis-footer {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  font-family: ui-monospace, Consolas, "JetBrains Mono", monospace;
+  font-size: 10px;
+}
+
+.eng-chassis-lbl { color: rgba(255, 255, 255, 0.4); display: block; }
+.eng-chassis-val { font-weight: 700; color: #ffffff; }
+
+/* Circuit Trajectory Panel */
+
+.eng-circuit-svg-wrap {
+  position: relative;
+  height: 220px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.eng-circuit-svg {
+  width: 100%;
+  height: 100%;
+}
+
+.eng-svg-sect-text {
+  font-family: ui-monospace, Consolas, "JetBrains Mono", monospace;
+  font-size: 9px;
+  fill: #71717a;
+}
+
+.eng-svg-callout-text {
+  font-family: ui-monospace, Consolas, "JetBrains Mono", monospace;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.eng-circuit-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 10px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  font-family: ui-monospace, Consolas, "JetBrains Mono", monospace;
+  font-size: 10px;
+}
+
+.eng-lbl-grey { color: rgba(255, 255, 255, 0.4); }
+.eng-val-white { color: #ffffff; font-weight: 600; }
+
+.eng-pos-indicator {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #ffffff;
+}
+
+/* Flight Instruments Panel */
+
+.eng-hud-blocks-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.eng-hud-block {
+  background: #201f21;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.eng-hud-blk-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.eng-hud-blk-lbl {
+  font-family: ui-monospace, Consolas, "JetBrains Mono", monospace;
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.eng-hud-seq-lbl {
+  font-family: ui-monospace, Consolas, "JetBrains Mono", monospace;
+  font-size: 10px;
+  color: #c3c6d0;
+}
+
+.eng-hud-speed-num {
+  font-size: 40px;
+  font-weight: 800;
+  color: #ffffff;
+  line-height: 1;
+  margin: 4px 0;
+}
+
+.eng-hud-gear-num {
+  font-size: 40px;
+  font-weight: 800;
+  color: #e11d24;
+  line-height: 1;
+  margin: 4px 0;
+}
+
+.eng-hud-blk-sub {
+  font-family: ui-monospace, Consolas, "JetBrains Mono", monospace;
+  font-size: 9px;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.eng-rpm-section {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 12px;
+}
+
+.eng-rpm-row {
+  display: flex;
+  justify-content: space-between;
+  font-family: ui-monospace, Consolas, "JetBrains Mono", monospace;
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.eng-rpm-bar-container {
+  display: flex;
+  gap: 3px;
+  height: 12px;
+  background: #201f21;
+  padding: 2px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.eng-rpm-segment {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.eng-rpm-active { background: #ffffff; }
+.eng-rpm-red { background: #e11d24; }
+
+.eng-pedals-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.eng-pedal-row { display: flex; flex-direction: column; gap: 3px; }
+
+.eng-pedal-lbl-row {
+  display: flex;
+  justify-content: space-between;
+  font-family: ui-monospace, Consolas, "JetBrains Mono", monospace;
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.eng-red-val { color: #e11d24; font-weight: 700; }
+
+.eng-pedal-track {
+  width: 100%;
+  height: 8px;
+  background: #201f21;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.eng-pedal-fill-white { height: 100%; background: #ffffff; transition: width 0.1s; }
+.eng-pedal-fill-red { height: 100%; background: #e11d24; transition: width 0.1s; }
+
+.eng-steer-gg-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  align-items: center;
+}
+
+.eng-steer-val {
+  font-size: 22px;
+  font-weight: 800;
+  color: #ffffff;
+}
+
+.eng-lbl-sub {
+  font-family: ui-monospace, Consolas, "JetBrains Mono", monospace;
+  font-size: 9px;
+  color: rgba(255, 255, 255, 0.3);
+}
+
+.eng-gg-plot {
+  position: relative;
+  width: 64px;
+  height: 64px;
+  margin: 0 auto;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: #201f21;
+}
+
+.eng-gg-cross-h { position: absolute; top: 50%; left: 0; right: 0; height: 1px; background: rgba(255, 255, 255, 0.2); }
+.eng-gg-cross-v { position: absolute; left: 50%; top: 0; bottom: 0; width: 1px; background: rgba(255, 255, 255, 0.2); }
+.eng-gg-ring { position: absolute; inset: 8px; border-radius: 50%; border: 1px solid rgba(255, 255, 255, 0.1); }
+.eng-gg-dot { position: absolute; top: 40%; left: 70%; width: 6px; height: 6px; background: #e11d24; }
+.eng-gg-text { position: absolute; bottom: 2px; right: 4px; font-family: ui-monospace, Consolas, "JetBrains Mono", monospace; font-size: 8px; color: rgba(255, 255, 255, 0.4); }
+
+/* ── Multi-Channel Telemetry Graph Workspace ──────────────────────────────── */
+
+.eng-graph-workspace {
+  margin: 0 40px 24px;
+}
+
+.eng-graph-title-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.eng-graph-h2 {
+  font-family: system-ui, -apple-system, "Space Grotesk", sans-serif;
+  font-size: 18px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  margin: 0;
+  color: #ffffff;
+}
+
+.eng-graph-tag {
+  font-family: ui-monospace, Consolas, "JetBrains Mono", monospace;
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.4);
+  background: #201f21;
+  padding: 2px 8px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.eng-axis-toggle-btn {
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.eng-axis-toggle-btn:hover {
+  background: #2a2a2c;
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.eng-trace-legends {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  font-family: ui-monospace, Consolas, "JetBrains Mono", monospace;
+  font-size: 10px;
+  color: #c3c6d0;
+}
+
+.eng-legend-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: #201f21;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.4);
+  padding: 3px 8px;
+  cursor: pointer;
+  font-family: ui-monospace, Consolas, "JetBrains Mono", monospace;
+  font-size: 10px;
+  transition: all 0.15s ease;
+}
+
+.eng-legend-btn:hover {
+  border-color: rgba(255, 255, 255, 0.25);
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.eng-legend-btn.eng-leg-active {
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.2);
+  background: #252427;
+}
+
+.eng-leg-line {
+  display: inline-block;
+  width: 14px;
+  height: 2px;
+}
+
+.eng-leg-white { background: #ffffff; }
+.eng-leg-dash { background: rgba(255, 255, 255, 0.4); border-bottom: 1px dashed #ffffff; }
+.eng-leg-red { background: #e11d24; height: 4px; }
+.eng-leg-grey { background: #c3c6d0; }
+
+.eng-btn-channel {
+  background: #201f21;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+  font-family: ui-monospace, Consolas, "JetBrains Mono", monospace;
+  font-size: 10px;
+  padding: 3px 8px;
+  cursor: pointer;
+}
+
+.eng-btn-channel:hover {
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+/* ── Hover Crosshair & Inspection Tooltip ─────────────────────────────────── */
+
+.eng-hover-crosshair {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: rgba(255, 255, 255, 0.35);
+  border-left: 1px dashed rgba(255, 255, 255, 0.7);
+  pointer-events: none;
+  z-index: 15;
+}
+
+.eng-hover-tooltip {
+  position: absolute;
+  top: 24px;
+  left: 10px;
+  background: #181719;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 8px 12px;
+  font-family: ui-monospace, Consolas, "JetBrains Mono", monospace;
+  font-size: 10px;
+  white-space: nowrap;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.85);
+  z-index: 25;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  color: #c3c6d0;
+}
+
+.eng-ht-head {
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: 1px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 3px;
+  margin-bottom: 2px;
+}
+
+.eng-ht-vals {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.eng-ht-hint {
+  font-size: 8px;
+  color: rgba(255, 255, 255, 0.35);
+  margin-top: 2px;
+}
+
+.eng-graph-container {
+  position: relative;
+  width: 100%;
+  background: #0e0e10;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  cursor: crosshair;
+  user-select: none;
+}
+
+.eng-graph-grid {
+  position: absolute;
+  inset: 0;
+  left: 56px;
+  display: flex;
+  justify-content: space-between;
+  pointer-events: none;
+  opacity: 0.15;
+  z-index: 0;
+}
+
+.eng-grid-line {
+  width: 1px;
+  height: 100%;
+  border-left: 1px dashed #ffffff;
+}
+
+.eng-playhead {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: #e11d24;
+  z-index: 20;
+  pointer-events: none;
+  box-shadow: 0 0 8px rgba(225, 29, 36, 0.6);
+}
+
+.eng-playhead-tooltip {
+  position: absolute;
+  top: 6px;
+  left: 8px;
+  background: #131315;
+  border: 1px solid #e11d24;
+  padding: 6px 10px;
+  font-family: ui-monospace, Consolas, "JetBrains Mono", monospace;
+  font-size: 10px;
+  white-space: nowrap;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.8);
+  z-index: 30;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.eng-ph-red { color: #e11d24; font-weight: 700; }
+.eng-ph-white { color: #ffffff; }
+.eng-ph-grey { color: rgba(255, 255, 255, 0.4); }
+
+.eng-channels-stack {
+  display: flex;
+  flex-direction: column;
+}
+
+.eng-channel-row {
+  display: flex;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  position: relative;
+  z-index: 1;
+}
+
+.eng-ch-speed { height: 140px; }
+.eng-ch-pedals { height: 110px; }
+.eng-ch-gear { height: 80px; }
+.eng-ch-steer { height: 90px; }
+
+.eng-y-axis {
+  width: 56px;
+  flex-shrink: 0;
+  padding: 6px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  font-family: ui-monospace, Consolas, "JetBrains Mono", monospace;
+  font-size: 9px;
+  color: rgba(255, 255, 255, 0.4);
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(28, 27, 29, 0.5);
+}
+
+.eng-y-top { font-weight: 700; color: #ffffff; }
+.eng-y-white { color: #ffffff; font-weight: 600; }
+.eng-y-red { color: #e11d24; font-weight: 700; }
+
+.eng-ch-graph {
+  position: relative;
+  flex: 1;
+  height: 100%;
+}
+
+.eng-ch-svg {
+  width: 100%;
+  height: 100%;
+}
+
+.eng-x-axis-bar {
+  display: flex;
+  align-items: center;
+  background: #1c1b1d;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 6px 0;
+  font-family: ui-monospace, Consolas, "JetBrains Mono", monospace;
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.eng-x-lbl-head {
+  width: 56px;
+  flex-shrink: 0;
+  text-align: center;
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.eng-x-ticks-row {
+  flex: 1;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 16px;
+}
+
+/* ── Replay Controls & Timeline ───────────────────────────────────────────── */
+
+.eng-replay-panel {
+  margin: 0 40px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.eng-sector-partition {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.eng-sector-cell {
+  background: #201f21;
+  padding: 8px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: ui-monospace, Consolas, "JetBrains Mono", monospace;
+  font-size: 10px;
+  color: #c3c6d0;
+}
+
+.eng-sec-active {
+  background: #1c1b1d;
+  border-left: 2px solid #e11d24;
+}
+
+.eng-sec-info { display: flex; align-items: center; gap: 8px; }
+.eng-sec-sub { color: rgba(255, 255, 255, 0.4); }
+.eng-sec-time { display: flex; align-items: center; gap: 6px; }
+
+.eng-scrubber-track {
+  position: relative;
+  width: 100%;
+  height: 12px;
+  background: #0e0e10;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  cursor: pointer;
+}
+
+.eng-scrubber-fill {
+  height: 100%;
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.eng-scrubber-thumb {
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 12px;
+  height: 20px;
+  background: #e11d24;
+  border: 1px solid #ffffff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
+}
+
+.eng-transport-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.eng-transport-btns {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.eng-btn-ctrl {
+  background: #201f21;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.6);
+  font-family: ui-monospace, Consolas, "JetBrains Mono", monospace;
+  font-size: 10px;
+  font-weight: 600;
+  padding: 6px 12px;
+  cursor: pointer;
+  border-radius: 0px;
+  transition: all 0.15s;
+}
+
+.eng-btn-ctrl:hover {
+  background: #2a2a2c;
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.eng-btn-play-active {
+  background: #e11d24;
+  border-color: #e11d24;
+  color: #ffffff;
+  font-weight: 700;
+}
+
+.eng-btn-play-active:hover {
+  background: #ff2a34;
+}
+
+.eng-btn-ml { margin-left: 8px; }
+
+.eng-hud-timer {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  font-family: ui-monospace, Consolas, "JetBrains Mono", monospace;
+  font-size: 11px;
+}
+
+.eng-speed-export-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.eng-speed-selector {
+  display: flex;
+  align-items: center;
+  background: #201f21;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 2px;
+  font-family: ui-monospace, Consolas, "JetBrains Mono", monospace;
+  font-size: 10px;
+}
+
+.eng-spd-btn {
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.4);
+  padding: 3px 8px;
+  cursor: pointer;
+}
+
+.eng-spd-btn:hover { color: #ffffff; }
+
+.eng-spd-active {
+  background: #2a2a2c;
+  color: #ffffff;
+  font-weight: 700;
+  border-bottom: 2px solid #e11d24;
+}
+
+/* ── Chassis System Notices & Warnings ────────────────────────────────────── */
+
+.eng-notices-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin: 0 40px 24px;
+}
+
+.eng-notice-card {
+  background: #1c1b1d;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 12px;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.eng-notice-warning {
+  border-color: rgba(225, 29, 36, 0.4);
+  background: rgba(225, 29, 36, 0.05);
+}
+
+.eng-notice-icon {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.eng-notice-title {
+  display: block;
+  font-family: ui-monospace, Consolas, "JetBrains Mono", monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: #ffffff;
+  margin-bottom: 4px;
+}
+
+.eng-notice-body {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.4);
+  line-height: 1.4;
+  margin: 0;
+}
+
+/* ── Footer ───────────────────────────────────────────────────────────────── */
+
+.eng-footer {
+  display: flex;
+  justify-content: space-between;
+  padding: 16px 40px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  font-family: ui-monospace, Consolas, "JetBrains Mono", monospace;
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.3);
+  letter-spacing: 1px;
+}
+
+/* ── Responsive Layout ────────────────────────────────────────────────────── */
+
+@media (max-width: 1400px) {
+  .eng-stage-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .eng-hud-panel {
+    grid-column: span 2;
+  }
+}
+
+@media (max-width: 1024px) {
+  .eng-hud-strip {
+    grid-template-columns: repeat(3, 1fr);
+    margin: 0 24px 20px;
+  }
+
+  .eng-status-banner,
+  .eng-title-section,
+  .eng-stage-grid,
+  .eng-graph-workspace,
+  .eng-replay-panel,
+  .eng-notices-grid,
+  .eng-footer {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+
+  .eng-stage-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .eng-hud-panel {
+    grid-column: span 1;
+  }
+
+  .eng-notices-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .eng-title {
+    font-size: 32px;
+  }
+
+  .eng-hud-strip {
+    grid-template-columns: repeat(2, 1fr);
+    margin: 0 16px 16px;
+  }
+
+  .eng-status-banner,
+  .eng-title-section,
+  .eng-stage-grid,
+  .eng-graph-workspace,
+  .eng-replay-panel,
+  .eng-notices-grid,
+  .eng-footer {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .eng-transport-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .eng-speed-export-row {
+    width: 100%;
+    justify-content: space-between;
+  }
+}

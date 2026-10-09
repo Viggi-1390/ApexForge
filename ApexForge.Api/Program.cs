@@ -30,6 +30,8 @@ builder.Services.AddSingleton<IMongoDatabase>(serviceProvider =>
 });
 
 // Existing services.
+builder.Services.AddSingleton<ApexForge.Api.Services.TelemetryService>();
+builder.Services.AddSingleton<ApexForge.Api.Services.TelemetryAnalysisService>();
 builder.Services.AddOpenApi();
 builder.Services.AddControllers();
 

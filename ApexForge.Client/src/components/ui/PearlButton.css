@@ -1,0 +1,71 @@
+/* ================================
+   ApexForge — PearlButton Component
+   ================================ */
+
+.pearl-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 8px 18px;
+  font-family: ui-monospace, Consolas, "JetBrains Mono", monospace;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: #e5e1e4;
+  cursor: pointer;
+  user-select: none;
+  border-radius: 0px;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+
+/* Default Metallic Dark Gradient */
+.pearl-btn-default {
+  background: linear-gradient(180deg, #1f2024 0%, #111114 100%);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.25);
+}
+
+.pearl-btn-default:hover:not(:disabled) {
+  border-color: rgba(255, 255, 255, 0.4);
+  color: #ffffff;
+  background: linear-gradient(180deg, #28292e 0%, #17181c 100%);
+}
+
+/* Primary Racing-Red Accent Gradient */
+.pearl-btn-primary {
+  background: linear-gradient(180deg, #2a1315 0%, #180a0c 100%);
+  border: 1px solid rgba(225, 29, 36, 0.6);
+  color: #ffffff;
+  box-shadow: inset 0 1px 1px rgba(255, 180, 172, 0.35);
+}
+
+.pearl-btn-primary:hover:not(:disabled) {
+  border-color: #e11d24;
+  background: linear-gradient(180deg, #38181b 0%, #200d0f 100%);
+  color: #ffffff;
+}
+
+.pearl-btn:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+.pearl-btn:focus-visible {
+  outline: 2px solid rgba(225, 29, 36, 0.6);
+  outline-offset: 2px;
+}
+
+.pearl-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.pearl-btn-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+}

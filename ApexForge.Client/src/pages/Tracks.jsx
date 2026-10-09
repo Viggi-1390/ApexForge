@@ -1,105 +1,86 @@
 import { useEffect, useState, useCallback } from "react";
-import { getVehicles } from "../services/api";
+import { getTracks } from "../services/api";
 import KineticGrid from "../components/ui/KineticGrid";
 import PearlButton from "../components/ui/PearlButton";
-import "./Garage.css";
+import "./Tracks.css";
 
-// ─── Fallback Vehicle Images (Unsplash) ─────────────────────────────────────
-// The API does not provide image URLs. These Unsplash images serve as
-// development fallbacks for each carousel position.
+// ─── Default Track Fallback Image ──────────────────────────────────────────
+const DEFAULT_TRACK_IMAGE =
+  "https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?w=1200&h=750&fit=crop&q=80";
 
-const VEHICLE_IMAGES = [
-  "https://images.unsplash.com/photo-1544636331-e26879cd4d9b?w=1000&h=600&fit=crop&q=80",
-  "https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=1000&h=600&fit=crop&q=80",
-  "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=1000&h=600&fit=crop&q=80",
-  "https://images.unsplash.com/photo-1583121274602-3e2820c69888?w=1000&h=600&fit=crop&q=80",
-  "https://images.unsplash.com/photo-1494976388531-d1058494cdd8?w=1000&h=600&fit=crop&q=80",
-];
-
-function getVehicleImage(index) {
-  return VEHICLE_IMAGES[index % VEHICLE_IMAGES.length];
-}
-
-// ─── Spec-label helper ──────────────────────────────────────────────────────
-// Derives a short specification label from the vehicle category.
-
-function getSpecLabel(category) {
-  if (!category) return "SPECIFICATION";
-  const upper = category.toUpperCase();
-  if (upper.includes("GT")) return "FIA SPECIFICATION";
-  if (upper.includes("FORMULA")) return "OPEN WHEEL SPEC";
-  if (upper.includes("TOURING")) return "TOURING REGULATION";
-  if (upper.includes("RALLY")) return "WRC SPECIFICATION";
-  return "SPECIFICATION";
-}
-
-// ─── Garage Page (Vehicle Selection) ────────────────────────────────────────
-
-function Garage({ onNavigate, selectedVehicleId: initialSelectedId, onSelectVehicle }) {
-  const [vehicles, setVehicles] = useState([]);
+function Tracks({ onNavigate, selectedTrackId: currentSelectedId, onSelectTrack }) {
+  const [tracks, setTracks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [activeIndex, setActiveIndex] = useState(0);
-  const [localSelectedVehicleId, setLocalSelectedVehicleId] = useState(null);
+  const [localSelectedTrackId, setLocalSelectedTrackId] = useState(null);
   const [imageError, setImageError] = useState({});
 
-  const selectedVehicleId = initialSelectedId ?? localSelectedVehicleId;
+  const selectedTrackId = currentSelectedId ?? localSelectedTrackId;
 
   // ── Data fetching ───────────────────────────────────────────────────────
-
-  const loadVehicles = useCallback(() => {
+  const loadTracks = useCallback(() => {
     setLoading(true);
     setError("");
-    getVehicles()
+    getTracks()
       .then((data) => {
-        setVehicles(data);
-        setActiveIndex(0);
+        setTracks(data);
+        if (currentSelectedId) {
+          const idx = data.findIndex((t) => t.trackId === currentSelectedId);
+          if (idx !== -1) setActiveIndex(idx);
+          else setActiveIndex(0);
+        } else {
+          setActiveIndex(0);
+        }
         setLoading(false);
       })
       .catch((err) => {
         console.error(err);
-        setError("Could not load vehicles from the API.");
+        setError("Could not load circuits from the database.");
         setLoading(false);
       });
-  }, []);
+  }, [currentSelectedId]);
 
   useEffect(() => {
     let active = true;
-    getVehicles()
+    getTracks()
       .then((data) => {
         if (!active) return;
-        setVehicles(data);
-        setActiveIndex(0);
+        setTracks(data);
+        if (currentSelectedId) {
+          const idx = data.findIndex((t) => t.trackId === currentSelectedId);
+          if (idx !== -1) setActiveIndex(idx);
+          else setActiveIndex(0);
+        } else {
+          setActiveIndex(0);
+        }
         setLoading(false);
       })
       .catch((err) => {
         if (!active) return;
         console.error(err);
-        setError("Could not load vehicles from the API.");
+        setError("Could not load circuits from the database.");
         setLoading(false);
       });
 
     return () => {
       active = false;
     };
-  }, []);
+  }, [currentSelectedId]);
 
   // ── Carousel navigation ────────────────────────────────────────────────
-
   const canGoPrev = activeIndex > 0;
-  const canGoNext = activeIndex < vehicles.length - 1;
+  const canGoNext = activeIndex < tracks.length - 1;
 
   const handlePrev = useCallback(() => {
     setActiveIndex((i) => Math.max(0, i - 1));
-    setImageError({});
   }, []);
 
   const handleNext = useCallback(() => {
-    setActiveIndex((i) => Math.min(vehicles.length - 1, i + 1));
-    setImageError({});
-  }, [vehicles.length]);
+    setActiveIndex((i) => Math.min(tracks.length - 1, i + 1));
+  }, [tracks.length]);
 
-  // Keyboard arrow navigation
+  // Keyboard navigation
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (e.key === "ArrowLeft") handlePrev();
@@ -110,25 +91,22 @@ function Garage({ onNavigate, selectedVehicleId: initialSelectedId, onSelectVehi
   }, [handlePrev, handleNext]);
 
   // ── Selection ───────────────────────────────────────────────────────────
-
   const handleSelect = useCallback(() => {
-    if (vehicles.length === 0) return;
-    const vehicle = vehicles[activeIndex];
-    setLocalSelectedVehicleId(vehicle.vehicleId);
-    if (typeof onSelectVehicle === "function") {
-      onSelectVehicle(vehicle);
+    if (tracks.length === 0) return;
+    const track = tracks[activeIndex];
+    setLocalSelectedTrackId(track.trackId);
+    if (typeof onSelectTrack === "function") {
+      onSelectTrack(track);
     }
-  }, [vehicles, activeIndex, onSelectVehicle]);
+  }, [tracks, activeIndex, onSelectTrack]);
 
-  // ── Active vehicle ──────────────────────────────────────────────────────
-
-  const activeVehicle = vehicles[activeIndex] || null;
-  const totalVehicles = vehicles.length;
+  // ── Active Track Specs ──────────────────────────────────────────────────
+  const activeTrack = tracks[activeIndex] || null;
+  const totalTracks = tracks.length;
   const displayIndex = String(activeIndex + 1).padStart(2, "0");
-  const displayTotal = String(totalVehicles).padStart(2, "0");
+  const displayTotal = String(totalTracks).padStart(2, "0");
 
-  // ── Shared header (shown in all states) ─────────────────────────────────
-
+  // ── Shared Header ───────────────────────────────────────────────────────
   const header = (
     <header className="af-header">
       <div className="af-header-left">
@@ -138,16 +116,16 @@ function Garage({ onNavigate, selectedVehicleId: initialSelectedId, onSelectVehi
         <nav className="af-nav" aria-label="Main navigation">
           <button
             type="button"
-            className="af-nav-item af-nav-active"
-            aria-current="page"
+            className="af-nav-item"
+            onClick={() => onNavigate && onNavigate("garage")}
+            aria-label="Navigate to Garage"
           >
             GARAGE
           </button>
           <button
             type="button"
-            className="af-nav-item"
-            onClick={() => onNavigate && onNavigate("tracks")}
-            aria-label="Navigate to Tracks"
+            className="af-nav-item af-nav-active"
+            aria-current="page"
           >
             TRACKS
           </button>
@@ -175,7 +153,6 @@ function Garage({ onNavigate, selectedVehicleId: initialSelectedId, onSelectVehi
   );
 
   // ── Loading state ───────────────────────────────────────────────────────
-
   if (loading) {
     return (
       <KineticGrid globalColor="monochrome">
@@ -183,7 +160,7 @@ function Garage({ onNavigate, selectedVehicleId: initialSelectedId, onSelectVehi
           {header}
           <div className="af-state-center">
             <div className="af-loader" />
-            <p className="af-state-text">INITIALIZING FLEET DATABASE...</p>
+            <p className="af-state-text">INITIALIZING TRACK DATABASE...</p>
           </div>
         </div>
       </KineticGrid>
@@ -191,7 +168,6 @@ function Garage({ onNavigate, selectedVehicleId: initialSelectedId, onSelectVehi
   }
 
   // ── Error state ─────────────────────────────────────────────────────────
-
   if (error) {
     return (
       <KineticGrid globalColor="monochrome">
@@ -199,7 +175,7 @@ function Garage({ onNavigate, selectedVehicleId: initialSelectedId, onSelectVehi
           {header}
           <div className="af-state-center">
             <p className="af-state-text af-state-error">{error}</p>
-            <button className="af-btn af-btn-retry" onClick={loadVehicles}>
+            <button className="af-btn af-btn-retry" onClick={loadTracks}>
               RETRY CONNECTION
             </button>
           </div>
@@ -209,16 +185,15 @@ function Garage({ onNavigate, selectedVehicleId: initialSelectedId, onSelectVehi
   }
 
   // ── Empty state ─────────────────────────────────────────────────────────
-
-  if (totalVehicles === 0) {
+  if (totalTracks === 0) {
     return (
       <KineticGrid globalColor="monochrome">
         <div className="af-page">
           {header}
           <div className="af-state-center">
-            <p className="af-state-text">NO VEHICLES IN FLEET DATABASE</p>
+            <p className="af-state-text">NO CIRCUITS AVAILABLE IN DATABASE</p>
             <p className="af-state-sub">
-              Add vehicles to the database to begin.
+              Check database connectivity or import circuit geometry.
             </p>
           </div>
         </div>
@@ -226,9 +201,8 @@ function Garage({ onNavigate, selectedVehicleId: initialSelectedId, onSelectVehi
     );
   }
 
-  // ── Main render ─────────────────────────────────────────────────────────
-
-  const isSelected = selectedVehicleId === activeVehicle?.vehicleId;
+  // ── Main Render ─────────────────────────────────────────────────────────
+  const isSelected = selectedTrackId === activeTrack?.trackId;
 
   return (
     <KineticGrid globalColor="monochrome">
@@ -241,24 +215,24 @@ function Garage({ onNavigate, selectedVehicleId: initialSelectedId, onSelectVehi
             <div className="af-eyebrow-left">
               <span className="af-eyebrow-red">
                 <span className="af-eyebrow-square" />
-                SYSTEM / FLEET ALLOCATION
+                SYSTEM / CIRCUIT ALLOCATION
               </span>
-              <span className="af-eyebrow-grey">GRID / 04-REG. READY</span>
+              <span className="af-eyebrow-grey">TRACK DATABASE / READY</span>
             </div>
           </div>
 
           <div className="af-hero-content">
             <div className="af-hero-left">
-              <h1 className="af-hero-title">CHOOSE YOUR MACHINE</h1>
+              <h1 className="af-hero-title">CHOOSE YOUR CIRCUIT</h1>
               <p className="af-hero-subtitle">
-                Select a vehicle platform to initialize telemetry ingestion,
-                aerodynamic modeling, and dynamics simulation protocols.
+                Select a circuit to initialize track geometry, surface conditions,
+                racing lines, and telemetry visualization.
               </p>
             </div>
             <div className="af-hero-right">
-              <span className="af-fleet-label">FLEET SPEC</span>
+              <span className="af-fleet-label">CIRCUIT SPEC</span>
               <span className="af-fleet-counter">
-                {displayIndex} / {displayTotal} — ACTIVE SPEC
+                {displayIndex} / {displayTotal} — ACTIVE CIRCUIT
               </span>
             </div>
           </div>
@@ -266,19 +240,19 @@ function Garage({ onNavigate, selectedVehicleId: initialSelectedId, onSelectVehi
           <div className="af-divider" />
         </section>
 
-        {/* ── Vehicle Showcase ─────────────────────────────────────────── */}
+        {/* ── Track Showcase Carousel ──────────────────────────────────── */}
         <section className="af-showcase">
           <div className="af-showcase-container">
-            {/* Side micro-labels (decorative) */}
+            {/* Side micro-labels */}
             <div className="af-showcase-label af-showcase-label-left">
-              <span>KNOWN SPEC</span>
+              <span>KNOWN CIRCUIT</span>
               <span
                 className="af-showcase-action"
                 role="button"
                 tabIndex={0}
                 onClick={handleSelect}
                 onKeyDown={(e) => e.key === "Enter" && handleSelect()}
-                aria-label={`Select ${activeVehicle.name}`}
+                aria-label={`Select ${activeTrack.name}`}
               >
                 [SELECT]
               </span>
@@ -286,29 +260,35 @@ function Garage({ onNavigate, selectedVehicleId: initialSelectedId, onSelectVehi
 
             <div className="af-showcase-image-wrap">
               {!imageError[activeIndex] ? (
-                <img
-                  src={getVehicleImage(activeIndex)}
-                  alt={activeVehicle.name}
-                  className="af-showcase-image"
-                  draggable={false}
-                  onError={() =>
-                    setImageError((prev) => ({
-                      ...prev,
-                      [activeIndex]: true,
-                    }))
-                  }
-                />
+                <>
+                  <img
+                    src={activeTrack.imageUrl || DEFAULT_TRACK_IMAGE}
+                    alt={activeTrack.name}
+                    className="af-showcase-image"
+                    draggable={false}
+                    onError={() =>
+                      setImageError((prev) => ({
+                        ...prev,
+                        [activeIndex]: true,
+                      }))
+                    }
+                  />
+                  <div className="af-showcase-overlay" />
+                </>
               ) : (
                 <div className="af-showcase-placeholder">
                   <span className="af-placeholder-text">
-                    {activeVehicle.name}
+                    {activeTrack.name}
+                  </span>
+                  <span className="af-placeholder-sub">
+                    {activeTrack.country}
                   </span>
                 </div>
               )}
             </div>
 
             <div className="af-showcase-label af-showcase-label-right">
-              <span>SYSTEM LINKAGE</span>
+              <span>SURFACE TELEMETRY</span>
               <span className="af-showcase-action">[INSPECT]</span>
             </div>
           </div>
@@ -320,29 +300,27 @@ function Garage({ onNavigate, selectedVehicleId: initialSelectedId, onSelectVehi
             className="af-btn af-btn-nav"
             onClick={handlePrev}
             disabled={!canGoPrev}
-            aria-label="Previous vehicle"
+            aria-label="Previous circuit"
           >
-            <span className="af-btn-arrow">←</span> PREV MACHINE
+            <span className="af-btn-arrow">←</span> PREV CIRCUIT
           </button>
 
           <div
             className="af-indicators"
             role="tablist"
-            aria-label="Vehicle carousel indicators"
+            aria-label="Circuit carousel position indicators"
           >
-            {vehicles.map((v, i) => (
+            {tracks.map((t, i) => (
               <button
-                key={v.vehicleId}
+                key={t.trackId}
                 className={
-                  "af-indicator" + (i === activeIndex ? " af-indicator-active" : "")
+                  "af-indicator" +
+                  (i === activeIndex ? " af-indicator-active" : "")
                 }
-                onClick={() => {
-                  setActiveIndex(i);
-                  setImageError({});
-                }}
+                onClick={() => setActiveIndex(i)}
                 role="tab"
                 aria-selected={i === activeIndex}
-                aria-label={`Vehicle ${i + 1}: ${v.name}`}
+                aria-label={`Circuit ${i + 1}: ${t.name}`}
               />
             ))}
           </div>
@@ -351,42 +329,56 @@ function Garage({ onNavigate, selectedVehicleId: initialSelectedId, onSelectVehi
             className="af-btn af-btn-nav"
             onClick={handleNext}
             disabled={!canGoNext}
-            aria-label="Next vehicle"
+            aria-label="Next circuit"
           >
-            NEXT MACHINE <span className="af-btn-arrow">→</span>
+            NEXT CIRCUIT <span className="af-btn-arrow">→</span>
           </button>
         </section>
 
-        {/* ── Bottom Info Bar ──────────────────────────────────────────── */}
+        {/* ── Bottom Information Bar ──────────────────────────────────── */}
         <section className="af-bottom-bar">
           <div className="af-divider" />
           <div className="af-bottom-content">
             <div className="af-bottom-left">
               <span className="af-bottom-accent" />
               <span className="af-bottom-category">
-                {activeVehicle.category?.toUpperCase() || "VEHICLE"}
+                {activeTrack.name.toUpperCase()}
               </span>
               <span className="af-bottom-spec">
-                {getSpecLabel(activeVehicle.category)}
+                {activeTrack.country ? activeTrack.country.toUpperCase() : "CIRCUIT"}
+                {activeTrack.circuitType ? ` // ${activeTrack.circuitType.toUpperCase()}` : ""}
               </span>
             </div>
 
             <div className="af-bottom-right">
-              {activeVehicle.horsepower > 0 && (
-                <span className="af-bottom-hp">
-                  {activeVehicle.horsepower} HP
-                </span>
-              )}
+              <div className="af-bottom-telemetry-meta">
+                {activeTrack.lengthKm && (
+                  <span className="af-bottom-hp">
+                    {activeTrack.lengthKm} KM
+                  </span>
+                )}
+                {activeTrack.turns && (
+                  <span className="af-bottom-hp">
+                    {activeTrack.turns} TURNS
+                  </span>
+                )}
+                {activeTrack.layoutVariant && (
+                  <span className="af-bottom-spec">
+                    {activeTrack.layoutVariant.toUpperCase()}
+                  </span>
+                )}
+              </div>
+
               <PearlButton
                 variant={isSelected ? "default" : "primary"}
                 onClick={handleSelect}
                 aria-label={
                   isSelected
-                    ? `${activeVehicle.name} selected`
-                    : `Select ${activeVehicle.name}`
+                    ? `${activeTrack.name} selected`
+                    : `Select ${activeTrack.name}`
                 }
               >
-                {isSelected ? "✓ SELECTED" : "SELECT VEHICLE"}
+                {isSelected ? "✓ SELECTED" : "SELECT TRACK"}
               </PearlButton>
             </div>
           </div>
@@ -396,4 +388,4 @@ function Garage({ onNavigate, selectedVehicleId: initialSelectedId, onSelectVehi
   );
 }
 
-export default Garage;
+export default Tracks;
