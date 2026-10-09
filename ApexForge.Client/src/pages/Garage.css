@@ -1,0 +1,146 @@
+/* ================================
+   ApexForge Garage
+   ================================ */
+
+.garage-page {
+    min-height: 100vh;
+    padding: 40px 50px;
+    background: #0b0b0d;
+    color: #ffffff;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Header */
+
+.garage-header {
+    margin-bottom: 40px;
+}
+
+.garage-title {
+    margin: 0;
+    font-size: 42px;
+    font-weight: 800;
+    letter-spacing: 2px;
+}
+
+.garage-subtitle {
+    margin-top: 8px;
+    color: #9a9a9f;
+    font-size: 15px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+/* Vehicle Grid */
+
+.vehicle-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 24px;
+    max-width: 1400px;
+}
+
+/* Vehicle Card */
+
+.vehicle-card {
+    overflow: hidden;
+    border: 1px solid #29292e;
+    border-radius: 14px;
+    background: #151519;
+    transition:
+        transform 0.2s ease,
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.vehicle-card:hover {
+    transform: translateY(-5px);
+    border-color: #66666d;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+}
+
+/* Vehicle Image Area */
+
+.vehicle-image {
+    height: 180px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #101014;
+    border-bottom: 1px solid #29292e;
+}
+
+.vehicle-image img {
+    max-width: 90%;
+    max-height: 90%;
+    object-fit: contain;
+}
+
+/* Vehicle Information */
+
+.vehicle-info {
+    padding: 20px;
+}
+
+.vehicle-name {
+    margin: 0 0 8px;
+    font-size: 22px;
+    font-weight: 700;
+}
+
+.vehicle-category {
+    margin: 0 0 18px;
+    color: #9a9a9f;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Specs */
+
+.vehicle-specs {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 15px;
+    border-top: 1px solid #29292e;
+}
+
+.vehicle-spec-label {
+    color: #77777e;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.vehicle-spec-value {
+    margin-top: 3px;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+/* Empty State */
+
+.garage-empty {
+    padding: 60px 20px;
+    text-align: center;
+    border: 1px dashed #333338;
+    border-radius: 14px;
+    color: #77777e;
+}
+
+/* Responsive */
+
+@media (max-width: 768px) {
+    .garage-page {
+        padding: 25px 20px;
+    }
+
+    .garage-title {
+        font-size: 32px;
+    }
+
+    .vehicle-grid {
+        grid-template-columns: 1fr;
+    }
+}

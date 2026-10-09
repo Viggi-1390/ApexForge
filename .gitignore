@@ -1,0 +1,12 @@
+﻿.vscode/
+**/bin/
+**/obj/
+**/node_modules/
+**/dist/
+**/.vs/
+**/.env
+**/.env.*
+!**/.env.example
+**/appsettings.Development.json
+*.user
+*.suo
